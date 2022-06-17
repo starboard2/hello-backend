@@ -12,10 +12,7 @@ RUN mvn clean install -Dmaven.test.skip=true
 ARG JAR_FILE=target/*.jar
 #COPY ["/tmp/target/*.jar", "application.jar"]
 #COPY $JAR_FILE application.jar
-RUN cp target/*.jar application.jar
-
-ARG JAR_FILE
-ADD target/*.jar app.jar
+RUN cp target/*.jar app.jar
 
 ENV JAR_OPTS=""
 ENV JAVA_OPTS=""
