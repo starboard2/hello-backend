@@ -12,6 +12,9 @@ phases:
       - aws eks update-kubeconfig --name eks-demo --region ap-northeast-2
       #- aws eks update-kubeconfig --name eks-demo --region aws-region --role-arn arn:aws:iam::037729278610:role/service-role/codebuild-hello-backend-service-role
       #- kubectl get po -n kube-system
+      - "chmod 0600 ~/.kube/config"
+      #- "kubectl get nodes"
+      - "aws sts get-caller-identity"
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
