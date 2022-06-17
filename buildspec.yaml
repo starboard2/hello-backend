@@ -12,7 +12,7 @@ phases:
       - mkdir ~/.kube
       #- aws eks --region ap-northeast-2 update-kubeconfig --name eks
       - aws eks update-kubeconfig --name eks-demo --region ap-northeast-2 --role-arn arn:aws:iam::037729278610:role/codebuild-hello-backend-service-role
-      - ./kubectl get po -n kube-system
+      - kubectl get po -n kube-system
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
