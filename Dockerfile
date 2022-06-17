@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM maven:3.8.6-openjdk-8-slim
 VOLUME /tmp
 
 COPY pom.xml .
