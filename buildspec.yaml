@@ -10,17 +10,17 @@ phases:
       - mkdir ~/.kube
       #- aws eks --region ap-northeast-2 update-kubeconfig --name eks
       - aws eks update-kubeconfig --name eks-demo --region ap-northeast-2
-      #- aws eks update-kubeconfig --name eks-demo --region aws-region --role-arn arn:aws:iam::037729278610:role/service-role/codebuild-hello-backend-service-role
-      #- kubectl get po -n kube-system
-      - "chmod 0600 ~/.kube/config"
-      #- "kubectl get nodes"
-      - "aws sts get-caller-identity"
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/
   build:
     commands:
+      - echo Build Starting on `date`
+      - echo Building with gradle...
+      - chmod +x ./mvn
+      - mvn clean install -Dmaven.test.skip=true
+      #- ./gradlew build
       - echo Building the Docker image
       - docker build -t $IMAGE_REPO_NAME:latest .
       - docker tag $IMAGE_REPO_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
