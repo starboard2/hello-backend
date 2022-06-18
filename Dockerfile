@@ -12,6 +12,8 @@ FROM adoptopenjdk:11-jre-hotspot
 #ARG WORKDIR=/tmp
 COPY --from=builder ./dependencies/ ./
 COPY --from=builder ./snapshot-dependencies/ ./
+RUN true
 COPY --from=builder ./spring-boot-loader/ ./
+RUN true
 COPY --from=builder ./application/ ./
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
