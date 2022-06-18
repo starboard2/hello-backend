@@ -3,6 +3,12 @@ FROM public.ecr.aws/docker/library/maven:3.8-openjdk-11 as builder
 #WORKDIR /tmp
 
 # compile the source code and package it in a jar file
+COPY pom.xml .
+# go-offline using the pom.xml
+RUN mvn dependency:go-offline
+# copy your other files
+COPY ./src ./src
+# compile the source code and package it in a jar file
 RUN mvn clean install -Dmaven.test.skip=true
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
